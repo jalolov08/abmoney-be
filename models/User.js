@@ -30,6 +30,22 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    userPlan:{
+      type:String,
+      default:"Start"
+    },
+    favoriteVideos: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Video'
+      }
+    ],
+    favoriteAudios: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Audio'
+      }
+    ]
   },
   {
     timestamps: true,
