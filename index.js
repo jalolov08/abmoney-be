@@ -88,7 +88,7 @@ app.post("/v1/auth/login", async (req, res) => {
 });
 app.get("/v1/me", async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req?.headers?.authorization?.split("Bearer ")[1];
     const decoded = jwt.verify(token, "abmoneySecretKey123");
 
     const user = await User.findOne({ _id: decoded.userId });
