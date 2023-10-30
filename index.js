@@ -66,6 +66,7 @@ app.post("/v1/auth/login", async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid password" });
     }
+    
     const token = jwt.sign(
       {
         userId: user._id,
@@ -80,12 +81,24 @@ app.post("/v1/auth/login", async (req, res) => {
       { expiresIn: "1y" }
     );
 
-    res.status(200).json({ token });
+    
+    const responseUser = {
+      _id: user._id,
+      email: user.email,
+      name: user.name,
+      surname: user.surname,
+      age: user.age,
+      gender: user.gender,
+      photoUri: user.photoUri,
+    };
+
+    res.status(200).json({ token, user: responseUser });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 app.get("/v1/me", async (req, res) => {
   try {
     const token = req?.headers?.authorization?.split("Bearer ")[1];
