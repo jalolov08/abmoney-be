@@ -5,10 +5,14 @@ const PostSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    description:{
+    enTitle:{
         type:String,
         required:true
     },
+   enDescription:{
+    type:String,
+    required:true
+},
     photoUri:{
         type:String,
         required:true,

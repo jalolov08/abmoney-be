@@ -10,7 +10,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jalolov08/abmoney-be.git"
-  },
+  },            
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -20,6 +20,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "express": "^4.18.2",
+    "google-auth-library": "^9.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.2",
     "multer": "^1.4.5-lts.1",

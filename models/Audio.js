@@ -5,6 +5,10 @@ const AudioSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    enTitle:{
+        type:String,
+        required:true,
+    },
     audioUri:{
         type:String,
         required:true
