@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer")
 const path = require("path")
+const { v4: uuidv4 } = require('uuid');
 const authController = require("./controllers/authController");
 const postController = require("./controllers/postController");
 const videoController = require("./controllers/videoController");
@@ -14,9 +15,11 @@ const storage = (folderName) =>
       cb(null, `uploads/${folderName}`);
     },
     filename: (_, file, cb) => {
-      cb(null, file.originalname);
+      const uniqueFileName = `${uuidv4()}-${file.originalname}`;
+      cb(null, uniqueFileName);
     },
   });
+
 
 const upload = (folderName) => multer({ storage: storage(folderName) });
 
@@ -25,13 +28,13 @@ const postUpload = upload('postPhotos');
 
 router.post('/v1/upload/profilePhoto', profileUpload.single('image'), (req, res) => {
   res.json({
-    url: `/v1/uploads/profilePhotos/${req.file.originalname}`,
+    url: `/v1/uploads/profilePhotos/${req.file.filename}`,
   });
 });
 
 router.post('/v1/upload/postPhoto', postUpload.single('image'), (req, res) => {
   res.json({
-    url: `/v1/uploads/postPhotos/${req.file.originalname}`,
+    url: `/v1/uploads/postPhotos/${req.file.filename}`,
   });
 });
 router.post("/v1/auth/register", authController.registerUser);
