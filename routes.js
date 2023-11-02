@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer")
-const path = require("path")
-const { v4: uuidv4 } = require('uuid');
+const multer = require("multer");
+const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 const authController = require("./controllers/authController");
 const postController = require("./controllers/postController");
 const videoController = require("./controllers/videoController");
@@ -20,23 +20,26 @@ const storage = (folderName) =>
     },
   });
 
-
 const upload = (folderName) => multer({ storage: storage(folderName) });
 
-const profileUpload = upload('profilePhotos');
-const postUpload = upload('postPhotos');
+const profileUpload = upload("profilePhotos");
+const postUpload = upload("postPhotos");
 
-router.post('/v1/upload/profilePhoto', profileUpload.single('image'), (req, res) => {
-  res.json({
-    url: `/v1/uploads/profilePhotos/${req.file.filename}`,
-  });
-});
-
-router.post('/v1/upload/postPhoto', postUpload.single('image'), (req, res) => {
+router.post(
+  "/v1/upload/profilePhoto",
+  profileUpload.single("image"),
+  (req, res) => {
+    res.json({
+      url: `/v1/uploads/profilePhotos/${req.file.filename}`,
+    });
+  }
+);
+router.post("/v1/upload/postPhoto", postUpload.single("image"), (req, res) => {
   res.json({
     url: `/v1/uploads/postPhotos/${req.file.filename}`,
   });
 });
+router.post("/v1/auth/userInfo/:userId" , authController.updateUserInformation)
 router.post("/v1/auth/register", authController.registerUser);
 router.post("/v1/auth/login", authController.loginUser);
 router.get("/v1/posts", postController.getPosts);

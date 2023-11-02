@@ -68,7 +68,41 @@ async function loginUser(req, res){
         res.status(500).json({ error: "Internal server error" });
       }
 }
+async function updateUserInformation(req, res) {
+  try {
+    const userId = req.params.userId; 
+    const { photoUri, age, gender } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $set: { photoUri, age, gender } },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const responseUser = {
+      _id: updatedUser._id,
+      email: updatedUser.email,
+      name: updatedUser.name,
+      surname: updatedUser.surname,
+      age: updatedUser.age,
+      gender: updatedUser.gender,
+      photoUri: updatedUser.photoUri,
+      userPlan: updatedUser.userPlan,
+    };
+
+    res.status(200).json(responseUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 module.exports = {
   registerUser,
-  loginUser
+  loginUser,
+  updateUserInformation
 };
