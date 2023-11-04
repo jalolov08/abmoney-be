@@ -20,15 +20,14 @@ const UserSchema = new mongoose.Schema(
     },
     age: {
       type: Number,
-      required: true,
-    },
+      },
     gender: {
       type: String,
-      required: true,
+     
     },
     photoUri: {
       type: String,
-      required: true,
+     
     },
     userPlan:{
       type:String,
