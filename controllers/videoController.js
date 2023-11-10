@@ -32,6 +32,8 @@ async function getVideoById(req ,res){
         if (!video) {
           return res.status(404).json({ error: "Video not found" });
         }
+        video.views = video.views + 1;
+        await video.save();
         res.status(200).json(video);
       } catch (error) {
         res.status(500).json({ error: "Internal server error" });
