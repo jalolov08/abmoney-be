@@ -1,22 +1,30 @@
 const Video = require("../models/Video");
 
 
-async function getVideos(req ,res ){
-    try {
-        const videos = await Video.find();
-        res.status(200).json(videos);
-      } catch (err) {
-        res.status(500).json({ error: "Internal Server Error" });
-      }
-}
+async function getVideos(req, res) {
+  try {
+    const videos = await Video.find();
 
+    
+    const freeVideos = videos.filter(video => video.free === true);
+    const paidVideos = videos.filter(video => video.free === false);
+
+   
+    res.status(200).json({ freeVideos, paidVideos });
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 
 async function addVideo(req ,res){
     try {
-        const { title, videoUri } = req.body;
+        const { title, videoUri , enTitle , free ,thumbnail } = req.body;
         const newVideo = new Video({
           title,
           videoUri,
+          enTitle,
+          free,
+          thumbnail
         });
         const savedVideo = await newVideo.save();
         const createdVideo = { ...savedVideo._doc };
