@@ -8,7 +8,7 @@ const videoController = require("./controllers/videoController");
 const audioController = require("./controllers/audioController");
 const favoriteVideo = require("./controllers/favoriteVideo");
 const favoriteAudio = require("./controllers/favoriteAudio");
-
+const paymentController = require("./controllers/paymentController")
 const storage = (folderName, allowedMimeTypes) =>
   multer.diskStorage({
     destination: (_, __, cb) => {
@@ -121,6 +121,7 @@ router.delete(
   "/v1/user/favorite/audio",
   favoriteAudio.deleteAudioFromFavorite
 );
+router.post("/v1/buypro" , paymentController.createPayment)
 
 module.exports = router;
   
