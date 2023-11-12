@@ -2,6 +2,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
+async function getUsers(req, res) {
+  const users = await User.find();
+  res.status(200).json(users);
+}
 async function registerUser(req, res) {
   try {
     const { name, surname, email, age, gender, photoUri, password } = req.body;
@@ -113,4 +117,5 @@ module.exports = {
   registerUser,
   loginUser,
   updateUserInformation,
+  getUsers,
 };

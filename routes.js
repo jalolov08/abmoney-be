@@ -8,7 +8,7 @@ const videoController = require("./controllers/videoController");
 const audioController = require("./controllers/audioController");
 const favoriteVideo = require("./controllers/favoriteVideo");
 const favoriteAudio = require("./controllers/favoriteAudio");
-const paymentController = require("./controllers/paymentController")
+const paymentController = require("./controllers/paymentController");
 const storage = (folderName, allowedMimeTypes) =>
   multer.diskStorage({
     destination: (_, __, cb) => {
@@ -95,6 +95,7 @@ router.post("/v1/upload/postPhoto", postUpload.single("image"), (req, res) => {
 router.post("/v1/auth/userInfo/:userId", authController.updateUserInformation);
 router.post("/v1/auth/register", authController.registerUser);
 router.post("/v1/auth/login", authController.loginUser);
+router.get("/v1/users", authController.getUsers);
 router.get("/v1/posts", postController.getPosts);
 router.post("/v1/post", postController.addPost);
 router.get("/v1/post/:postId", postController.getPostById);
@@ -113,15 +114,8 @@ router.post("/v1/user/favorite/video", favoriteVideo.addVideoToFavorite);
 router.post("/v1/user/favorite/audio", favoriteAudio.addAudioToFavorite);
 router.get("/v1/user/favorite/videos/:userId", favoriteVideo.getFavoriteVideo);
 router.get("/v1/user/favorite/audios/:userId", favoriteAudio.getFavoriteAudio);
-router.delete(
-  "/v1/user/favorite/video",
-  favoriteVideo.deleteVideoFromFavorite
-);
-router.delete(
-  "/v1/user/favorite/audio",
-  favoriteAudio.deleteAudioFromFavorite
-);
-router.post("/v1/buypro" , paymentController.createPayment)
+router.delete("/v1/user/favorite/video", favoriteVideo.deleteVideoFromFavorite);
+router.delete("/v1/user/favorite/audio", favoriteAudio.deleteAudioFromFavorite);
+router.post("/v1/buypro", paymentController.createPayment);
 
 module.exports = router;
-  
